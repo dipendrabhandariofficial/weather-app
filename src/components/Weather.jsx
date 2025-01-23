@@ -7,7 +7,7 @@ const Weather = ({ weatherData }) => {
   }
 
   return (
-    <div className="w-[90%] md:w-[60%] lg:w-[40%] bg-white rounded-lg shadow-xl p-6 animate-bounce ">
+    <div className="w-[90%] md:w-[60%] lg:w-[40%] bg-white rounded-lg shadow-xl p-6 animate- ">
       <div className="text-center">
         <h2 className="text-2xl font-semibold text-gray-700">
           {weatherData.name}, {weatherData.sys.country}
