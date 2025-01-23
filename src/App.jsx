@@ -3,16 +3,17 @@ import axios from "axios";
 import { FiSearch } from "react-icons/fi";
 import "./App.css";
 import Weather from "./components/Weather";
+import { ImGift } from "react-icons/im";
 
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
   const [language, setLanguage] = useState("");
   const [suggestions, setSuggestions] = useState([]); // For city suggestions
-  const [error, setError] = useState(""); // For error messages
+  const [error, setError] = useState(""); // Error message
+  const [errorImage, setErrorImage] = useState(""); // Error image path
 
   const API_KEY = "efb39d93b1a00f9f1163f8e27d898e0a";
-  
 
   const fetchSuggestions = (query) => {
     if (query) {
@@ -23,9 +24,8 @@ function App() {
           setSuggestions(response.data); // Update suggestions with API response
           console.log(response.data);
           console.log("API URL:", url);
-console.log("Error Response:", error.response);
-console.log("Error:", error);
-          
+          console.log("Error Response:", error.response);
+          console.log("Error:", error);
         })
         .catch((error) => {
           console.error("Error fetching suggestions:", error);
@@ -36,7 +36,9 @@ console.log("Error:", error);
   };
 
   const searchLocation = (cityName) => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName || location}&lang=""${language}&units=metric&appid=${API_KEY}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${
+      cityName || location
+    }&lang=""${language}&units=metric&appid=${API_KEY}`;
     axios
       .get(url)
       .then((response) => {
@@ -44,14 +46,14 @@ console.log("Error:", error);
         console.log(response.data); // Update weather data
         setError(""); // Clear any error
       })
-      .catch((error,location) => {
+      .catch((error) => {
         if (error.response && error.response.status === 404) {
-          setError("Location not found. Please try again."); // City not found
-          
+          setError("Location not found. Please try again.");
+          setErrorImage("sorry.jpg"); // Set the image path
         } else {
           setError("An error occurred while fetching data. Please try later.");
+          setErrorImage(""); // Clear the image if it's another error
         }
-        
       });
     setSuggestions([]); // Clear suggestions after search
     setLocation(""); // Clear input field
@@ -60,7 +62,7 @@ console.log("Error:", error);
   return (
     <div className="h-screen w-full bg-gradient-to-br from-blue-200 to-blue-400 flex flex-col items-center justify-center gap-8">
       {/* Input Field and Search Button */}
-      <div className="w-[80%] md:w-[50%] lg:w-[30%] relative">
+      <div className="w-[80%]  md:w-[50%] lg:w-[30%] relative">
         <input
           type="text"
           className="w-full bg-white border border-gray-300 rounded-lg shadow-lg px-6 py-4 text-lg font-sans placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
@@ -100,7 +102,18 @@ console.log("Error:", error);
       </div>
 
       {/* Error Message */}
-      {error && <div className="text-red-500 text-lg font-semibold">{error}</div>}
+      {error && (
+        <div className="text-center">
+          <p className="text-red-500 text-lg font-semibold">{error}</p>
+          {errorImage && (
+            <img
+              src={errorImage}
+              alt="Error"
+              className="w-[30%] h-auto mx-auto mt-4"
+            />
+          )}
+        </div>
+      )}
 
       {/* Weather Component */}
       <Weather weatherData={data} />
