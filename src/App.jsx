@@ -12,6 +12,7 @@ function App() {
   const [error, setError] = useState(""); // For error messages
 
   const API_KEY = "efb39d93b1a00f9f1163f8e27d898e0a";
+  
 
   const fetchSuggestions = (query) => {
     if (query) {
@@ -21,6 +22,9 @@ function App() {
         .then((response) => {
           setSuggestions(response.data); // Update suggestions with API response
           console.log(response.data);
+          console.log("API URL:", url);
+console.log("Error Response:", error.response);
+console.log("Error:", error);
           
         })
         .catch((error) => {
@@ -40,12 +44,14 @@ function App() {
         console.log(response.data); // Update weather data
         setError(""); // Clear any error
       })
-      .catch((error) => {
+      .catch((error,location) => {
         if (error.response && error.response.status === 404) {
           setError("Location not found. Please try again."); // City not found
+          
         } else {
           setError("An error occurred while fetching data. Please try later.");
         }
+        
       });
     setSuggestions([]); // Clear suggestions after search
     setLocation(""); // Clear input field
