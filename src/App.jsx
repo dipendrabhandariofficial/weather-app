@@ -66,9 +66,9 @@ function App() {
         />
         <button
           onClick={() => searchLocation()}
-          className="absolute right-2 top-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 focus:outline-none"
+          className="absolute right-3 top-[13px]  text-blue-400 rounded-full px-3 py-2 focus:outline-none"
         >
-          <FiSearch size={20} />
+          <FiSearch size={25} />
         </button>
 
         {/* Suggestions Dropdown */}
