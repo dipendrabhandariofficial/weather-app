@@ -7,7 +7,7 @@ import Weather from "./components/Weather";
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("");
   const [suggestions, setSuggestions] = useState([]); // For city suggestions
   const [error, setError] = useState(""); // For error messages
 
@@ -20,6 +20,7 @@ function App() {
         .get(url)
         .then((response) => {
           setSuggestions(response.data); // Update suggestions with API response
+          
         })
         .catch((error) => {
           console.error("Error fetching suggestions:", error);
@@ -30,11 +31,12 @@ function App() {
   };
 
   const searchLocation = (cityName) => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName || location}&lang=${language}&units=metric&appid=${API_KEY}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName || location}&lang=""${language}&units=metric&appid=${API_KEY}`;
     axios
       .get(url)
       .then((response) => {
-        setData(response.data); // Update weather data
+        setData(response.data);
+        console.log(response.data); // Update weather data
         setError(""); // Clear any error
       })
       .catch((error) => {
