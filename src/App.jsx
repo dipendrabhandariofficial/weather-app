@@ -20,6 +20,7 @@ function App() {
         .get(url)
         .then((response) => {
           setSuggestions(response.data); // Update suggestions with API response
+          console.log(response.data);
           
         })
         .catch((error) => {
