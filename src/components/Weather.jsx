@@ -32,7 +32,7 @@ const Weather = ({ weatherData }) => {
 
       <div className="mt-6 space-y-4">
         
-        <div className="flex justify-between border-collapse max-md:border-b-gray-600 max-md:shadow-md max-md:bg-slate-200 rounded-r-md border-spacing-5 p-2 ">
+        <div className="flex justify-between ">
           <p className="text-gray-600">Feels Like</p>
           <p className="text-gray-900 font-bold">
             {weatherData.main.feels_like.toFixed()}°C

@@ -42,9 +42,9 @@ function App() {
       .catch((error) => {
         if (error.response && error.response.status === 404) {
           setError("Location not found. Please try again.");
-          setErrorImage("sorry.jpg");
         } else {
           setError("An error occurred while fetching data. Please try later.");
+          setErrorImage("sorry.jpg");
           setErrorImage("");
         }
       });
@@ -68,11 +68,15 @@ function App() {
   };
 
   return (
-    <div className="h-screen w-full bg-gradient-to-br from-blue-200 to-blue-400 flex flex-col items-center justify-center gap-8">
-      <div className="w-[80%] md:w-[50%] lg:w-[30%] relative">
+    <div className="h-screen w-full bg-gradient-to-br from-blue-200 to-blue-400 flex flex-col items-center justify-center gap-6">
+      
+      <div>
+          <h2 className="uppercase font-mono md:text-lg text-sm font-bold text-white">Get weather details of your city </h2>
+        </div><div className="w-[80%] md:w-[50%] lg:w-[30%] relative">
+      
         <input
           type="text"
-          className="w-full bg-white border border-gray-300 rounded-lg shadow-lg px-6 py-4 text-lg font-sans placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          className="w-full bg-white border  border-gray-300 rounded-lg shadow-lg px-6 py-4 text-lg font-sans placeholder-gray-500 placeholder:font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           placeholder="Enter location"
           value={location}
           onChange={(e) => {
@@ -80,7 +84,14 @@ function App() {
             setLocation(query);
             fetchSuggestions(query);
           }}
-          onKeyDown={handleKeyDown} // Handle arrow and Enter keys
+          
+          onKeyDown={(e) => {
+            handleKeyDown(e); // Handles arrow key navigation
+            if (e.key === "Enter") {
+              searchLocation(); // Triggers search on Enter
+            }
+          }}
+          // Handle arrow and Enter keys
         />
         <button
           onClick={() => searchLocation()}
